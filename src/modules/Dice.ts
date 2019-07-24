@@ -24,6 +24,6 @@ export class Dice {
     }
 
     roll(value?: DiceValue){
-        this.value = value || Math.floor(Math.random() * 6 + 1) as DiceValue
+        this.value = value || (Math.floor(Math.random() * 6 - 1) + 1) as DiceValue
     }
 }
