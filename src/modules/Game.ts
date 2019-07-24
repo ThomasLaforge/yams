@@ -1,11 +1,12 @@
 import { Player } from "./Player";
+import { DEFAULT_WITH_CHANCE_RULE } from "./defs";
 
 export class Game {
 
     constructor(
         public players: Player[],
         public currentPlayerIndex: number = 0,
-        public withChanceContract = false
+        public withChanceContract = DEFAULT_WITH_CHANCE_RULE
     ){}
 
     nextPlayer(){
