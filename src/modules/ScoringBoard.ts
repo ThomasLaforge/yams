@@ -18,8 +18,7 @@ export class ScoringBoard {
     }
 
     get valuesScore(){
-        let score = Object.keys(this.diceValues).reduce( (score, diceValueAsKey) => {
-            const diceValue = parseInt(diceValueAsKey)
+        let score = Object.keys(this.diceValues).map(k => parseInt(k)).reduce( (score, diceValue) => {
             return score + diceValue * this.diceValues[diceValue]
         }, 0)
 
