@@ -28,7 +28,7 @@ export enum Suite {
     Big
 }
 
-export function getContractName(contractType: ScoringMission){
+export function getContractPoints(contractType: ScoringMission){
     switch (contractType) {
         case ScoringMission.PetiteSuite: return 25 
         case ScoringMission.GrandeSuite: return 25 
@@ -39,7 +39,7 @@ export function getContractName(contractType: ScoringMission){
     }
 }
 
-export function getContractPoints(contractType: ScoringMission){
+export function getContractName(contractType: ScoringMission){
     switch (contractType) {
         case ScoringMission.Brelan: return 'brelan'
         case ScoringMission.PetiteSuite: return 'petite suite' 
