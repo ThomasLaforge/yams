@@ -17,7 +17,7 @@ export class ScoringBoard {
         this.contracts[type] = score || true
     }
 
-    getValuesScore(withBonus: boolean){
+    getValuesScore(withBonus = true){
         let score = Object.keys(this.diceValues).reduce( (score, diceValueAsKey) => {
             const diceValue = parseInt(diceValueAsKey)
             return score + diceValue * this.diceValues[diceValue]

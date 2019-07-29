@@ -11,7 +11,7 @@ describe('score', () => {
             for (let i = 0; i < 6; i++) {
                 scoringBoard.diceValues[i + 1] = 3
             }
-            expect(scoringBoard.valuesScore).toBe(3*1+3*2+3*3+3*4+3*5+3*6+37)
+            expect(scoringBoard.getValuesScore()).toBe(3*1+3*2+3*3+3*4+3*5+3*6+37)
         })
 
         test('2 for each value => no bonus', () => {
@@ -19,7 +19,7 @@ describe('score', () => {
             for (let i = 0; i < 6; i++) {
                 scoringBoard.diceValues[i + 1] = 2
             }
-            expect(scoringBoard.valuesScore).toBe(2*1+2*2+2*3+2*4+2*5+2*6)
+            expect(scoringBoard.getValuesScore()).toBe(2*1+2*2+2*3+2*4+2*5+2*6)
         })
     })
 

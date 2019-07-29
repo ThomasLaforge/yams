@@ -4,7 +4,7 @@ import {Player as PlayerModel} from '../../modules/Player'
 import { getContractPoints, getContractName } from '../../modules/defs';
 
 interface ScoringBoardProps {
-    player: PlayerModel
+    players: PlayerModel[]
 }
 
 interface ScoringBoardState {
@@ -46,40 +46,63 @@ export default class ScoringBoard extends Component<ScoringBoardProps, ScoringBo
       })
   }
 
-  render(){
-    const {name, scoringBoard} = this.props.player
-
-    return <div className="scoring-board">
+  renderTopScoringBoard(){
+    return (
         <table>
-            <tbody>
-                <tr>
-                    <th></th>
-                    <th>{this.props.player.name}</th>
-                </tr>
-                
-                {this.renderDiceValuesScoring()}
+            <tr>
+                <th></th>
+                <th>{name}</th>
+            </tr>
+            
+            {this.renderDiceValuesScoring()}
 
-                <tr>
-                    <td>Total sans bonus</td>
-                    <td>{scoringBoard.getValuesScore(false)}</td>
-                </tr>
-                <tr>
-                    <td>Total avec bonus</td>
-                    <td>{scoringBoard.getValuesScore(true)}</td>
-                </tr>
-                
+            <tr>
+                <td>Total sans bonus</td>
+                <td>{scoringBoard.getValuesScore(false)}</td>
+            </tr>
+            <tr>
+                <td>Total avec bonus</td>
+                <td>{scoringBoard.getValuesScore(true)}</td>
+            </tr>
+        </table>
+    )
+  }
+
+  renderBottomScoringBoard(){
+      return (
+          <table>
                 {this.renderContractScoring()}
-
                 <tr>
                     <td>Total contrats</td>
-                    <td>{scoringBoard.contractScore}</td>
+                    {this.props.players.map(p => 
+                        <td>
+                            {p.scoringBoard.contractScore}
+                        </td>    
+                    )}
                 </tr>
-                <tr>
-                    <td>Total</td>
-                    <td>{scoringBoard.score}</td>
-                </tr>
-            </tbody>
+          </table>
+      )
+
+  }
+
+  renderTotalScore(){
+      return (
+        <table>
+        <tr>
+            <td>Total</td>
+            {this.props.players.map(p => 
+                <td>{p.scoringBoard.score}</td>
+            )}
+        </tr>
         </table>
+      )
+  }
+
+  render(){
+    return <div className="scoring-board">
+        {this.renderTopScoringBoard()}
+        {this.renderBottomScoringBoard()}
+        {this.renderTotalScore()}
     </div>
   };
 }
