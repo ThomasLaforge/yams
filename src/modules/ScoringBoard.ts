@@ -17,12 +17,13 @@ export class ScoringBoard {
         this.contracts[type] = score || true
     }
 
-    get valuesScore(){
-        let score = Object.keys(this.diceValues).map(k => parseInt(k)).reduce( (score, diceValue) => {
+    getValuesScore(withBonus: boolean){
+        let score = Object.keys(this.diceValues).reduce( (score, diceValueAsKey) => {
+            const diceValue = parseInt(diceValueAsKey)
             return score + diceValue * this.diceValues[diceValue]
         }, 0)
 
-        if( score >= VALUES_MIN_POINT_FOR_BONUS){
+        if( withBonus && score >= VALUES_MIN_POINT_FOR_BONUS){
             score += VALUES_POINT_BONUS
         }
 
@@ -49,7 +50,7 @@ export class ScoringBoard {
     }
 
     get score(){
-        return this.valuesScore + this.contractScore
+        return this.getValuesScore(true) + this.contractScore
     }
 
     isComplete(){
@@ -61,7 +62,11 @@ export class ScoringBoard {
     }
 
     areAllContractsComplete(){
-        const nbContractsToComplete = DEFAULT_WITH_CHANCE_RULE ? NB_CONTRACTS_WITH_CHANCE_RULE : NB_CONTRACTS_WITHOUT_CHANCE_RULE
-        return Object.keys(this.contracts).length === nbContractsToComplete
+        return Object.keys(this.contracts).length === this.nbContractsToComplete
     }
+
+    get nbContractsToComplete(){
+        return DEFAULT_WITH_CHANCE_RULE ? NB_CONTRACTS_WITH_CHANCE_RULE : NB_CONTRACTS_WITHOUT_CHANCE_RULE
+    }
+
 }

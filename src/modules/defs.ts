@@ -13,14 +13,14 @@ export const NB_CONTRACTS_WITHOUT_CHANCE_RULE = 7
 export type DiceValue = 1 | 2 | 3| 4 | 5 | 6
 
 export enum ScoringMission {
-    DiceValue,
     Brelan,
     PetiteSuite,
     GrandeSuite,
     Full,
     Carre,
     Yam,
-    Chance
+    Chance,
+    DiceValue
 }
 
 export enum Suite {
@@ -36,5 +36,17 @@ export function getContractPoints(contractType: ScoringMission){
         case ScoringMission.Carre: return 40 
         case ScoringMission.Yam: return 50    
         default: return 0
+    }
+}
+
+export function getContractName(contractType: ScoringMission){
+    switch (contractType) {
+        case ScoringMission.Brelan: return 'brelan'
+        case ScoringMission.PetiteSuite: return 'petite suite' 
+        case ScoringMission.GrandeSuite: return 'grande suite'
+        case ScoringMission.Full: return 'full'
+        case ScoringMission.Carre: return 'carre'
+        case ScoringMission.Yam: return 'yam'
+        default: return 'unknown mission'
     }
 }
