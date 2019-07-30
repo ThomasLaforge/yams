@@ -1,4 +1,3 @@
-import { Dice } from "./Dice";
 import { ScoringBoard } from "./ScoringBoard";
 
 export class Player {
