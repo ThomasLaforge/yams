@@ -1,9 +1,16 @@
 import React from 'react';
-import './Die.css'
+import './Dice.scss'
 
 // All credits to https://github.com/tryton-vanmeer/React-Dice-Roller
 
-class Die extends React.Component {
+interface DiceProps {
+    value: false | number
+}
+interface DiceState {
+
+}
+
+export default class Dice extends React.Component<DiceProps, DiceState> {
     private sides = [
         "translateZ(-100px) rotateY(0deg)",
         "translateZ(-100px) rotateX(-180deg)",
@@ -20,13 +27,13 @@ class Die extends React.Component {
     }
 
     handleClick() {
-        var die = document.getElementById("die") as HTMLElement
-        var sides = this.sides
+        let die = document.getElementById("die") as HTMLElement
+        let sides = this.sides
 
         die.classList.add("rolling");
 
-        setTimeout(function () {
-            var roll = Math.floor(Math.random() * (sides.length))
+        setTimeout( () => {
+            let roll = !!this.props.value ? this.props.value - 1 : Math.floor(Math.random() * (sides.length))
             die.classList.remove("rolling");
             die.style.transform = sides[roll];
         }, 750);
@@ -34,7 +41,7 @@ class Die extends React.Component {
 
     render() {
         let divs = this.sides.map((side, index) => {
-            return <div className="side">{index+1}</div>
+            return <div key={index} className="side">{index+1}</div>
         });
 
         return (
@@ -46,5 +53,3 @@ class Die extends React.Component {
         );
     }
 }
-
-export default Die;
