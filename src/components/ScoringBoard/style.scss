@@ -1,0 +1,47 @@
+.scoring-board {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px;
+    width: 500px;
+
+    .image-title {
+        background-image: url(../../images/grille-score-yams.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 130px;
+    }
+
+    .table {
+        border-collapse: collapse;
+        text-align: center;
+        margin-top: 20px;
+
+        th, td {
+            width: 20px;
+            border: 1px solid black;
+            text-align: center;
+        }
+    
+        th:nth-child(1), td:nth-child(1) {
+            width: 80px;
+            font-weight: bold;
+        }
+
+        .empty-case {
+            border: initial;
+        }
+    }
+
+    .total-score-global {
+        background-color: aqua;        
+    }
+    .total-score-category {
+        background-color: burlywood;
+    }
+    .total-score-sub-category {
+        background-color: bisque;
+    }
+
+}
