@@ -1,8 +1,12 @@
+$diceWidth: 200px;
+$diceBorderWidth: 2px;
+$diceWidthWithoutBorder: $diceWidth - 2 * $diceBorderWidth;
+
 .die-container {
     position: relative;
     perspective: 1000px;
-    width: 200px;
-    height: 200px;
+    width: $diceWidth;
+    height: $diceWidth;
     cursor: pointer;
 }
 
@@ -11,17 +15,17 @@
 */
 #die {
     position: absolute;
-    transition: transform .25s;
+    transition: transform .35s;
     transform-style: preserve-3d;
     transform: translateZ(-100px);
     width: 100%;
     height: 100%;
-    background-color: #D50000;
-    color: #FFFFFF;
+    background-color: #FFFFFF;
+    // color: #FFFFFF;
 }
 
 #die.rolling {
-    animation: rotation .75s linear;
+    animation: rotation 0.75s linear;
 }
 
 @keyframes rotation {
@@ -39,20 +43,12 @@
     justify-content: center;
     align-items: center;
     margin: 0;
-    width: 196px;
-    height: 196px;
+    width: $diceWidthWithoutBorder;
+    height: $diceWidthWithoutBorder;
     background-color: inherit;
-    border: 2px solid #000000;
+    border: $diceBorderWidth solid #000000;
     font-size: 8em;
     font-weight: bold;
-}
-
-/*
-    Die Optional Styles
-*/
-
-#die.option-translucent {
-    background-color: rgba(213, 0, 0, .80);
 }
 
  /*
