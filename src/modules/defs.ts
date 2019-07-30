@@ -1,5 +1,3 @@
-import { Player } from "./Player";
-
 export const NB_DICES = 5
 export const MAX_ROLL = 3
 export const VALUES_MIN_POINT_FOR_BONUS = 63
@@ -47,6 +45,7 @@ export function getContractName(contractType: ScoringMission){
         case ScoringMission.Full: return 'full'
         case ScoringMission.Carre: return 'carre'
         case ScoringMission.Yam: return 'yam'
+        case ScoringMission.Chance: return 'chance'
         default: return 'unknown mission'
     }
 }
