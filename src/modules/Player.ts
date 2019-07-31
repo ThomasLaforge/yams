@@ -1,4 +1,5 @@
 import { ScoringBoard } from "./ScoringBoard";
+import { ScoringMission } from "./defs";
 
 export class Player {
 
@@ -14,6 +15,10 @@ export class Player {
 
     hasCompleteScoringBoard(){
         return this.scoringBoard.isComplete()
+    }
+
+    hasNotCompleteContract(contractType: ScoringMission){
+        return this.scoringBoard.hasComplete(contractType)
     }
 
 }

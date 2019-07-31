@@ -1,11 +1,26 @@
 import { DiceTurn } from "../modules/DiceTurn";
 import { Dice } from "../modules/Dice";
 import { DiceValue } from "../modules/defs";
+import { Game } from "../modules/Game";
+import { Player } from "../modules/Player";
+import { ScoringBoard } from "../modules/ScoringBoard";
 
 const createTurnFromDiceValues = (diceValues: DiceValue[]) => 
     new DiceTurn(diceValues.map( v => new Dice(v) ))
 
 describe('contracts', () => {
+    describe('has complete', () => {
+
+        const isFullRoll1 = createTurnFromDiceValues([2,2,2,4,4])
+        const isNotFullRoll1 = createTurnFromDiceValues([3,2,2,4,4])
+        const player = new Player('toto', 'tata', new ScoringBoard({2: 2}, {1: true}))
+        const game = new Game([player])
+
+        // test('is full', () => {
+        //     expect(isFullRoll1.isFull()).toBe(true)
+        // })
+    })
+
     describe('full', () => {
 
         const isFullRoll1 = createTurnFromDiceValues([2,2,4,4,4])

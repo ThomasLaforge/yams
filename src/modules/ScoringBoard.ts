@@ -8,12 +8,11 @@ export class ScoringBoard {
         public withChanceRule = DEFAULT_WITH_CHANCE_RULE
     ){}
 
-    // TODO
     completeValueContract(diceValue: DiceValue, nbDice: number){
         this.diceValues[diceValue] = nbDice
     }
 
-    completeContract(type: ScoringMission, score?: number ){
+    completeContract(type: ScoringMission, score: boolean | number ){
         this.contracts[type] = score || true
     }
 
@@ -63,6 +62,12 @@ export class ScoringBoard {
 
     areAllContractsComplete(){
         return Object.keys(this.contracts).length === this.nbContractsToComplete
+    }
+
+    hasComplete(contractType: ScoringMission, value?: number){
+        return contractType === ScoringMission.DiceValue
+            ? this.diceValues[value!] !== undefined
+            : this.contracts[contractType] !== undefined
     }
 
     get nbContractsToComplete(){
