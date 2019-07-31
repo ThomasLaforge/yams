@@ -1,10 +1,13 @@
 import React from 'react';
 import './Dice.scss'
 
+import { Dice as DiceModel } from '../../modules/Dice';
+
 // All credits to https://github.com/tryton-vanmeer/React-Dice-Roller
 
 interface DiceProps {
-    value: false | number
+    dice?: DiceModel,
+    selected?: boolean
 }
 interface DiceState {
 
@@ -22,12 +25,12 @@ export default class Dice extends React.Component<DiceProps, DiceState> {
     private dieRef = React.createRef<HTMLDivElement>();
 
     componentDidMount(){
-        let initRoll = !!this.props.value ? this.props.value - 1 : Math.floor(Math.random() * (this.sides.length))
+        let initRoll = !!this.props.dice ? this.props.dice.value - 1 : Math.floor(Math.random() * (this.sides.length))
         this.dieRef.current!.style.transform = this.sides[initRoll];
     }
 
     componentDidUpdate(){
-        this.roll()
+        this.props.dice && !this.props.dice.isLocked && this.roll()
     }
 
     roll = () => {
@@ -35,7 +38,7 @@ export default class Dice extends React.Component<DiceProps, DiceState> {
         this.dieRef.current!.classList.add("rolling");
 
         setTimeout( () => {
-            let roll = !!this.props.value ? this.props.value - 1 : Math.floor(Math.random() * (sides.length))
+            let roll = !!this.props.dice ? this.props.dice.value - 1 : Math.floor(Math.random() * (sides.length))
             this.dieRef.current!.classList.remove("rolling");
             this.dieRef.current!.style.transform = sides[roll];
         }, 750);
@@ -47,7 +50,7 @@ export default class Dice extends React.Component<DiceProps, DiceState> {
         });
 
         return (
-            <div className="die-container" onClick={ this.roll }>
+            <div className="die-container" /*onClick={ this.roll }*/>
                 <div ref={this.dieRef} className={'die-content d' + this.sides.length}>
                     { divs }
                 </div>

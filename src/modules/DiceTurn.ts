@@ -6,7 +6,7 @@ export class DiceTurn {
 
     constructor(
         public dices = Array(NB_DICES).fill('').map( e => new Dice() ),
-        public nbRoll = 0
+        public nbRoll = 1
     ){}
 
     start(){
