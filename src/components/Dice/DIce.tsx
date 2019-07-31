@@ -19,34 +19,35 @@ export default class Dice extends React.Component<DiceProps, DiceState> {
         "translateZ(-100px) rotateX(-90deg)",
         "translateZ(-100px) rotateX(90deg)"
     ];
+    private dieRef = React.createRef<HTMLDivElement>();
 
     constructor(props: any) {
         super(props);
-        this.handleClick = this.handleClick.bind(this);
-        this.render = this.render.bind(this);
     }
 
-    handleClick() {
-        let die = document.getElementById("die") as HTMLElement
-        let sides = this.sides
+    componentDidUpdate(){
+        this.roll()
+    }
 
-        die.classList.add("rolling");
+    roll = () => {
+        let sides = this.sides
+        this.dieRef.current!.classList.add("rolling");
 
         setTimeout( () => {
             let roll = !!this.props.value ? this.props.value - 1 : Math.floor(Math.random() * (sides.length))
-            die.classList.remove("rolling");
-            die.style.transform = sides[roll];
+            this.dieRef.current!.classList.remove("rolling");
+            this.dieRef.current!.style.transform = sides[roll];
         }, 750);
     }
 
-    render() {
+    render(){
         let divs = this.sides.map((side, index) => {
             return <div key={index} className="side">{index+1}</div>
         });
 
         return (
-            <div className="die-container" onClick={ this.handleClick }>
-                <div id="die" className={'d' + this.sides.length}>
+            <div className="die-container" onClick={ this.roll }>
+                <div ref={this.dieRef} className={'die-content d' + this.sides.length}>
                     { divs }
                 </div>
             </div>

@@ -13,7 +13,7 @@ $diceWidthWithoutBorder: $diceWidth - 2 * $diceBorderWidth;
 /*
     Common Die Style
 */
-#die {
+.die-content {
     position: absolute;
     transition: transform .35s;
     transform-style: preserve-3d;
@@ -24,7 +24,7 @@ $diceWidthWithoutBorder: $diceWidth - 2 * $diceBorderWidth;
     // color: #FFFFFF;
 }
 
-#die.rolling {
+.die-content.rolling {
     animation: rotation 0.75s linear;
 }
 
@@ -37,7 +37,7 @@ $diceWidthWithoutBorder: $diceWidth - 2 * $diceBorderWidth;
     }
 }
 
-#die .side {
+.die-content .side {
     position: absolute;
     display: flex;
     justify-content: center;
