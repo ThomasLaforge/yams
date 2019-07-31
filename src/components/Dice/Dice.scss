@@ -3,11 +3,14 @@ $diceBorderWidth: 2px;
 $diceWidthWithoutBorder: $diceWidth - 2 * $diceBorderWidth;
 
 .die-container {
+    transform: scale(0.8);
+    transform-origin: 0 0;
     position: relative;
-    perspective: 1000px;
+    perspective: 10000px;
     width: $diceWidth;
     height: $diceWidth;
     cursor: pointer;
+    border: 1px red solid;
 }
 
 /*
