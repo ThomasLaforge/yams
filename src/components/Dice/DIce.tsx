@@ -21,10 +21,6 @@ export default class Dice extends React.Component<DiceProps, DiceState> {
     ];
     private dieRef = React.createRef<HTMLDivElement>();
 
-    constructor(props: any) {
-        super(props);
-    }
-
     componentDidUpdate(){
         this.roll()
     }
