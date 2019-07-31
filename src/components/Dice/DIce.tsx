@@ -21,6 +21,11 @@ export default class Dice extends React.Component<DiceProps, DiceState> {
     ];
     private dieRef = React.createRef<HTMLDivElement>();
 
+    componentDidMount(){
+        let initRoll = !!this.props.value ? this.props.value - 1 : Math.floor(Math.random() * (this.sides.length))
+        this.dieRef.current!.style.transform = this.sides[initRoll];
+    }
+
     componentDidUpdate(){
         this.roll()
     }
