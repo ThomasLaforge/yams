@@ -7,7 +7,8 @@ import { Dice as DiceModel } from '../../modules/Dice';
 
 interface DiceProps {
     dice?: DiceModel,
-    selected?: boolean
+    selected?: boolean,
+    onClick?: Function
 }
 interface DiceState {
 
@@ -50,7 +51,7 @@ export default class Dice extends React.Component<DiceProps, DiceState> {
         });
 
         return (
-            <div className="die-container" /*onClick={ this.roll }*/>
+            <div className="die-container" onClick={() => this.props.onClick && this.props.onClick()} >
                 <div ref={this.dieRef} className={'die-content d' + this.sides.length}>
                     { divs }
                 </div>

@@ -1,6 +1,6 @@
 import { DiceTurn } from "../modules/DiceTurn";
 import { Dice } from "../modules/Dice";
-import { DiceValue } from "../modules/defs";
+import { DiceValue, ScoringMission } from "../modules/defs";
 import { Game } from "../modules/Game";
 import { Player } from "../modules/Player";
 import { ScoringBoard } from "../modules/ScoringBoard";
@@ -12,13 +12,19 @@ describe('contracts', () => {
     describe('has complete', () => {
 
         const isFullRoll1 = createTurnFromDiceValues([2,2,2,4,4])
-        const isNotFullRoll1 = createTurnFromDiceValues([3,2,2,4,4])
         const player = new Player('toto', 'tata', new ScoringBoard({2: 2}, {1: true}))
         const game = new Game([player])
+        game.diceTurn = isFullRoll1
+        test('has not complete full', () => {
+            expect(player.hasNotCompleteContract(ScoringMission.Full)).toBe(true)
+        })
+        test('has not complete 2', () => {
+            expect(player.hasNotCompleteContract(ScoringMission.DiceValue, 2)).toBe(false)
+        })
 
-        // test('is full', () => {
-        //     expect(isFullRoll1.isFull()).toBe(true)
-        // })
+        test('has not complete 3', () => {
+            expect(player.hasNotCompleteContract(ScoringMission.DiceValue, 3)).toBe(true)
+        })
     })
 
     describe('full', () => {

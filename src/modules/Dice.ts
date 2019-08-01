@@ -33,4 +33,17 @@ export class Dice {
     lock(){
         this.isLocked = true
     }
+
+    unlock(){
+        this.isLocked = false
+    }
+    switchIsLocked(){
+        if(this.isLocked){
+            this.unlock()
+        }
+        else {
+            this.lock()
+        }
+    }
+    
 }

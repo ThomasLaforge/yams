@@ -64,7 +64,7 @@ export class ScoringBoard {
         return Object.keys(this.contracts).length === this.nbContractsToComplete
     }
 
-    hasComplete(contractType: ScoringMission, value?: number){
+    hasComplete(contractType: ScoringMission, value?: DiceValue){
         return contractType === ScoringMission.DiceValue
             ? this.diceValues[value!] !== undefined
             : this.contracts[contractType] !== undefined

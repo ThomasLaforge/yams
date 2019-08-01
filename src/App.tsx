@@ -31,10 +31,19 @@ export default class App extends Component<{}, AppState> {
   }
 
   roll = () => {
-    const dices = this.state.dices
+    const dices = this.state.dices.slice()
     dices.forEach(d => d.roll())
     dices.forEach( (d,i) => i > 2 && d.lock())
     this.setState({ dices, nbRemainingRoll: this.state.nbRemainingRoll - 1 })
+  }
+
+  handleDiceClick = (d: DiceModel, index: number) => {
+    let index = -1
+
+    let dGlobalIndex = 0
+    let dices = this.state.dices.slice()
+    dices[index].switchIsLocked()
+    this.setState({ dices })
   }
 
   render(){
@@ -46,7 +55,7 @@ export default class App extends Component<{}, AppState> {
         
         <div className="dices-to-roll">
           {this.state.dices.filter(d => !d.isLocked).map( (d, k) => 
-            <Dice dice={d} />
+            <Dice dice={d} onClick={this.handleDiceClick(d, k)} />
           )}
         </div>
 

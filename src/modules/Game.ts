@@ -2,6 +2,11 @@ import { Player } from "./Player";
 import { DEFAULT_WITH_CHANCE_RULE, ScoringMission, DiceValue } from "./defs";
 import { DiceTurn } from "./DiceTurn";
 
+interface DiceValueContractInfo {
+    diceValue: DiceValue;
+    nbDice: number;
+};
+
 export class Game {
 
     constructor(
@@ -18,14 +23,23 @@ export class Game {
         }
     }
 
-    canEndTurn(contractType: ScoringMission, value: { diceValue: DiceValue, nbDice: number } | boolean | number){
-        return this.currentPlayer.hasNotCompleteContract(contractType) && 
+    getPossibleContractsForCurrentPlayer(){
+
+    }
+
+    canEndTurn(contractType: ScoringMission, value: DiceValueContractInfo | boolean | number){
+        // @ts-ignore
+        return this.currentPlayer.hasNotCompleteContract(contractType, value && value.hasOwnProperty("diceValue") && value.diceValue) && 
             (
                 contractType === ScoringMission.DiceValue ||
+                value === false ||
                 contractType === ScoringMission.Chance ||
                 contractType === ScoringMission.Brelan && this.diceTurn.isBrelan() ||
                 contractType === ScoringMission.Carre && this.diceTurn.isCarre() ||
                 contractType === ScoringMission.Full && this.diceTurn.isFull() ||
+                contractType === ScoringMission.Yam && this.diceTurn.isYams() ||
+                contractType === ScoringMission.PetiteSuite && this.diceTurn.isSmallSuite() ||
+                contractType === ScoringMission.GrandeSuite && this.diceTurn.isBigSuite()
             )
         }
 
