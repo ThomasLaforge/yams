@@ -18,7 +18,7 @@ $diceWidthWithoutBorder: $diceWidth - 2 * $diceBorderWidth;
 */
 .die-content {
     position: absolute;
-    transition: transform .35s;
+    transition: transform 0s;
     transform-style: preserve-3d;
     transform: translateZ(-200px);
     width: 100%;
