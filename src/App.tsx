@@ -10,6 +10,7 @@ import { Dice as DiceModel } from './modules/Dice';
 import { NB_DICES, DiceValue } from './modules/defs';
 
 interface AppState {
+  currentPlayerIndex: number,
   players: Player[],
   dices: DiceModel[],
   nbRemainingRoll: number,
@@ -21,6 +22,7 @@ export default class App extends Component<{}, AppState> {
   constructor(props: any){
     super(props)
     this.state = {
+      currentPlayerIndex: 0,
       players: [
         new Player('Thomas', 'fdskf', new ScoringBoardModel({1: 2}, {0: 24, 2: true, 3: false})),
         new Player('Mélanie', 'fddsskf', new ScoringBoardModel({}, {})),
@@ -68,50 +70,73 @@ export default class App extends Component<{}, AppState> {
           <div className="current-player-name">{this.state.players[0].name}</div>
         </div>
         
-        <div className="dices-to-roll">
-          {this.state.dices.filter(d => !d.isLocked).map( (d, k) => 
-            <Dice 
+        {this.state.nbRemainingRoll === 0
+        ? (
+          <div className="roll-result">
+            <h2 className="roll-result-title">Result</h2>
+            <div className="roll-result-info">You have to chose a contract.</div>
+            {this.state.dices.map( (d, k) => (
+              <Dice
+                key={k}
+                dice={d}
+                roll={false}
+              />
+            ))}
+          </div>
+        )
+        : [
+          <div className="dices-to-roll">
+            {this.state.dices.filter(d => !d.isLocked).map( (d, k) => 
+              <Dice 
+              key={k}
               dice={d}
               onClick={() => this.handleDiceClick(d, k)} 
               roll={this.state.rolling}
-            />
-          )}
-        </div>
+              />
+              )}
+          </div>,
+          
+          <div className="roll-info-zone">
+            <div className="remaining-rolls-sentence">
+              {this.state.nbRemainingRoll > 0 
+                ? `You still have ${this.state.nbRemainingRoll} roll${this.state.nbRemainingRoll === 1 ? '' : 's'}`
+                : `You don't have any more roll ...`
+              } 
+            </div>
 
-        <div className="roll-info-zone">
-          <div className="remaining-rolls-sentence">
-            {this.state.nbRemainingRoll > 0 
-              ? `You still have ${this.state.nbRemainingRoll} roll${this.state.nbRemainingRoll === 1 ? '' : 's'}`
-              : `You don't have any more roll ...`
-            } 
+            <button
+              className='roll-btn'
+              onClick={this.roll}
+              disabled={this.state.nbRemainingRoll === 0}
+              >Roll !</button>
+          </div>,
+
+          <div className="dices-locked">
+            <h2 className='dices-locked-title'>Locked dices</h2>
+            <div className="dices-locked-content">
+              {this.state.dices.filter(d => d.isLocked).map( (d, k) => 
+                <Dice 
+                key={k}
+                dice={d} 
+                onClick={() => this.handleDiceClick(d, k)} 
+                roll={false} 
+                />
+              )}
+            </div>
           </div>
-
-          <button
-            className='roll-btn'
-            onClick={this.roll}
-            disabled={this.state.nbRemainingRoll === 0}
-          >Roll !</button>
-        </div>
-
-        <div className="dices-locked">
-          <h2 className='dices-locked-title'>Locked dices</h2>
-          <div className="dices-locked-content">
-            {this.state.dices.filter(d => d.isLocked).map( (d, k) => 
-              <Dice dice={d} onClick={() => this.handleDiceClick(d, k)} roll={false} />
-            )}
-          </div>
-        </div>
+        ]}
 
         <div className="turn-possibilities">
           <h2 className='turn-possibilities-title'>Possibilities</h2>
           <div className="turn-possibilities-content">
-              {this.possibilities.map(p => <div>{p}</div>)}
+              {this.possibilities.map( (p, k) => <div key={k}>{p}</div>)}
           </div>
         </div>
       </div>
       
       <div className='scoring-board-zone'>
         <ScoringBoard 
+          currentPlayerIndex={this.state.currentPlayerIndex}
           players={this.state.players}
         />
       </div>
