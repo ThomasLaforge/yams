@@ -57,6 +57,10 @@ export default class App extends Component<{}, AppState> {
     this.setState({ dices })
   }
 
+  get possibilities(){
+    return ['ok']
+  } 
+
   render(){
     return <div className="App">
       <div className='roll-zone'>
@@ -93,7 +97,7 @@ export default class App extends Component<{}, AppState> {
         <div className="turn-possibilities">
           <h2 className='turn-possibilities-title'>Possibilities</h2>
           <div className="turn-possibilities-content">
-
+              {this.possibilities.map(p => <div>{p}</div>)}
           </div>
         </div>
       </div>
