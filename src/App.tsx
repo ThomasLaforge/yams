@@ -81,11 +81,20 @@ export default class App extends Component<{}, AppState> {
         >Roll !</button>
 
 
-        <h2 className='dices-locked-title'>Locked dices</h2>
         <div className="dices-locked">
-          {this.state.dices.filter(d => d.isLocked).map( (d, k) => 
-            <Dice dice={d} onClick={() => this.handleDiceClick(d, k)} roll={false} />
-          )}
+          <h2 className='dices-locked-title'>Locked dices</h2>
+          <div className="dices-locked-content">
+            {this.state.dices.filter(d => d.isLocked).map( (d, k) => 
+              <Dice dice={d} onClick={() => this.handleDiceClick(d, k)} roll={false} />
+            )}
+          </div>
+        </div>
+
+        <div className="turn-possibilities">
+          <h2 className='turn-possibilities-title'>Possibilities</h2>
+          <div className="turn-possibilities-content">
+
+          </div>
         </div>
       </div>
       
