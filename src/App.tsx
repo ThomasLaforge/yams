@@ -78,12 +78,20 @@ export default class App extends Component<{}, AppState> {
           )}
         </div>
 
-        <button
-          className='roll-btn'
-          onClick={this.roll}
-          disabled={this.state.nbRemainingRoll === 0}
-        >Roll !</button>
+        <div className="roll-info-zone">
+          <div className="remaining-rolls-sentence">
+            {this.state.nbRemainingRoll > 0 
+              ? `You still have ${this.state.nbRemainingRoll} roll${this.state.nbRemainingRoll === 1 ? '' : 's'}`
+              : `You don't have any more roll ...`
+            } 
+          </div>
 
+          <button
+            className='roll-btn'
+            onClick={this.roll}
+            disabled={this.state.nbRemainingRoll === 0}
+          >Roll !</button>
+        </div>
 
         <div className="dices-locked">
           <h2 className='dices-locked-title'>Locked dices</h2>

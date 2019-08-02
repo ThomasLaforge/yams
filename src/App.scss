@@ -23,24 +23,43 @@
     .dices-to-roll, .dices-locked-content {
         display: flex;
         flex-direction: row;
-        justify-content: center;
         align-items: center;
-        height: 250px;
+        height: 150px;
 
         margin-top: 40px;
     }
 
-    .roll-btn {
-        margin: 0 auto;
+    .dices-to-roll {
+        justify-content: center;
     }
+
+    .roll-info-zone {
+
+        .remaining-rolls-sentence {
+            font-style: italic;
+        }
+    
+        .roll-btn {
+            margin: 0 0 0 020px;
+        }
+    
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
     .dices-locked-title {
         text-align: center;
     }
 }
 .scoring-board-zone {
-    border-left: 2px solid black;
+    border-left: 1px solid black;
     width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .scoring-board-title {
+        text-align: center;
+    }
 }
