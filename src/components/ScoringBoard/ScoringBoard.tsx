@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import uniq from 'lodash/uniq'
+import {fluc} from '../../Utils'
 
 import {Player as PlayerModel} from '../../modules/Player'
 import { getContractPoints, getContractName } from '../../modules/defs';
@@ -37,7 +38,7 @@ export default class ScoringBoard extends Component<ScoringBoardProps, ScoringBo
   renderContractScoring(){
     return Array(this.props.players[0].scoringBoard.nbContractsToComplete).fill('').map( (e, i) => {
       return <tr key={i}>
-          <td>{getContractName(i)}</td>
+          <td>{fluc(getContractName(i))}</td>
           {this.props.players.map( (p, k) => {
             const contractValue = p.scoringBoard.contracts[i]
             let contractValueToShow = contractValue || ''
@@ -145,7 +146,8 @@ export default class ScoringBoard extends Component<ScoringBoardProps, ScoringBo
 
   render(){
     return <div className="scoring-board">
-      <div className='image-title' />
+      {/* <div className='image-title' /> */}
+      <h2 className="scoring-board-title">Tableau des scores</h2>
       {this.renderTopScoringBoard()}
       {this.renderBottomScoringBoard()}
       {this.renderTotalScore()}
