@@ -1,0 +1,13 @@
+UI
+    possibilities
+        question: render on specific ui or in scoring board
+        - render possibilities
+        - handle click on possibility
+
+Server
+    socket events
+        - init
+        - start_game
+        - roll
+        - play
+        - update_lock_dices
