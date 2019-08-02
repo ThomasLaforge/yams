@@ -32,6 +32,11 @@
         .empty-case {
             border: initial;
         }
+
+        .possible-case {
+            border-color: lightgreen;
+            border-width: 2px;
+        }
     }
 
     .total-score-global {

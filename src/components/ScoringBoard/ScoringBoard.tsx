@@ -3,13 +3,16 @@ import uniq from 'lodash/uniq'
 import {fluc} from '../../Utils'
 
 import {Player as PlayerModel} from '../../modules/Player'
-import { getContractPoints, getContractName, DiceValue, ScoringMission } from '../../modules/defs';
+import { getContractPoints, getContractName } from '../../modules/defs';
 
 import './style.scss'
 
 interface ScoringBoardProps {
     players: PlayerModel[],
-    currentPlayerIndex: number
+    isCurrentPlayer: boolean,
+    currentPlayerIndex: number,
+    clickOnValueContract: Function,
+    clickOnMissionContract: Function
 }
 
 interface ScoringBoardState {
@@ -28,22 +31,21 @@ export default class ScoringBoard extends Component<ScoringBoardProps, ScoringBo
     return this.props.players[this.props.currentPlayerIndex]
   }
 
-  handleClickOnValueContract = (playerIndex: number, diceValue: DiceValue) => {
-    console.log('click on value contract', this.props.currentPlayerIndex === playerIndex, playerIndex, diceValue)
-  }
-  
-  handleClickOnContract = (playerIndex: number, mission: ScoringMission) => {
-    console.log('click on mission contract', this.props.currentPlayerIndex === playerIndex, playerIndex, mission)
-  }
-
   renderDiceValuesScoring(){
     return Array(6).fill('').map( (e, i) => {
       const diceValue = i + 1
       return <tr key={i}>
           <td>{diceValue}</td>
-          {this.props.players.map( (p, k) => 
-              <td key={k} onClick={() => this.handleClickOnContract(k, diceValue)}>{p.scoringBoard.diceValues[diceValue]}</td>
-          )}
+          {this.props.players.map( (p, k) => {
+            const hasScore = !!p.scoringBoard.diceValues[diceValue] || p.scoringBoard.diceValues[diceValue] === 0
+            return <td 
+              key={k} 
+              className={ (!hasScore && this.props.isCurrentPlayer && this.props.currentPlayerIndex === k) ? 'possible-case' : ''}
+              onClick={() => !hasScore && this.props.clickOnValueContract(k, diceValue)}
+            >
+              {p.scoringBoard.diceValues[diceValue]}
+            </td>
+          })}
       </tr>
     })
   }
@@ -63,7 +65,13 @@ export default class ScoringBoard extends Component<ScoringBoardProps, ScoringBo
               contractValueToShow = getContractPoints(i).toString()
             }
             
-            return <td key={k} onClick={() => this.handleClickOnContract(k, i)}>{contractValueToShow}</td>
+            return <td 
+                key={k} 
+                className={ (contractValueToShow === '' && this.props.isCurrentPlayer && this.props.currentPlayerIndex === k) ? 'possible-case' : ''}              
+                onClick={() => this.props.clickOnMissionContract(k, i)}
+              >
+                {contractValueToShow}
+              </td>
           })}
       </tr>
     })

@@ -9,7 +9,8 @@ interface DiceProps {
     dice?: DiceModel,
     selected?: boolean,
     onClick?: Function
-    roll?: boolean
+    roll?: boolean,
+    id?: any
 }
 interface DiceState {
 
@@ -34,6 +35,7 @@ export default class Dice extends React.PureComponent<DiceProps, DiceState> {
 
         return (
             <div 
+                key={this.props.id}
                 className="die-container" 
                 onClick={() => this.props.onClick && this.props.onClick()} 
             >

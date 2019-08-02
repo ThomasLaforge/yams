@@ -7,14 +7,15 @@ import Dice from './components/Dice/Dice';
 import { Player } from './modules/Player';
 import { ScoringBoard as ScoringBoardModel } from './modules/ScoringBoard';
 import { Dice as DiceModel } from './modules/Dice';
-import { NB_DICES, DiceValue } from './modules/defs';
+import { NB_DICES, DiceValue, ScoringMission } from './modules/defs';
 
 interface AppState {
   currentPlayerIndex: number,
   players: Player[],
   dices: DiceModel[],
   nbRemainingRoll: number,
-  rolling: boolean
+  rolling: boolean,
+  myIndex: number
 }
 
 export default class App extends Component<{}, AppState> {
@@ -23,13 +24,14 @@ export default class App extends Component<{}, AppState> {
     super(props)
     this.state = {
       currentPlayerIndex: 0,
+      myIndex: 0,
       players: [
         new Player('Thomas', 'fdskf', new ScoringBoardModel({1: 2}, {0: 24, 2: true, 3: false})),
         new Player('Mélanie', 'fddsskf', new ScoringBoardModel({}, {})),
         new Player('Kevin', 'fddsskf', new ScoringBoardModel({}, {}))
       ],
       dices: Array(NB_DICES).fill('').map(e => new DiceModel()),
-      nbRemainingRoll: 1,
+      nbRemainingRoll: 3,
       rolling: false
     }
   }
@@ -59,9 +61,13 @@ export default class App extends Component<{}, AppState> {
     this.setState({ dices })
   }
 
-  get possibilities(){
-    return ['ok']
-  } 
+  handleClickOnValueContract = (playerIndex: number, diceValue: DiceValue) => {
+    console.log('click on value contract', this.state.currentPlayerIndex === playerIndex, playerIndex, diceValue)
+  }
+
+  handleClickOnMissionContract = (playerIndex: number, mission: ScoringMission) => {
+    console.log('click on mission contract', this.state.currentPlayerIndex === playerIndex, playerIndex, mission)
+  }
 
   render(){
     return <div className="App">
@@ -70,28 +76,30 @@ export default class App extends Component<{}, AppState> {
           <div className="current-player-name">{this.state.players[0].name}</div>
         </div>
         
-        {this.state.nbRemainingRoll === 0
-        ? (
+        {this.state.nbRemainingRoll === 0 && (
           <div className="roll-result">
             <h2 className="roll-result-title">Result</h2>
             <div className="roll-result-info">You have to chose a contract.</div>
-            {this.state.dices.map( (d, k) => (
-              <Dice
-                key={k}
-                dice={d}
-                roll={false}
-              />
-            ))}
+            <div className="roll-result-content">
+              {this.state.dices.map( (d, k) => (
+                <Dice
+                  id={k}
+                  dice={d}
+                  roll={false}
+                />
+              ))}
+            </div>
           </div>
-        )
-        : [
-          <div className="dices-to-roll">
+        )}
+
+        {this.state.nbRemainingRoll > 0 && 
+          [<div className="dices-to-roll">
             {this.state.dices.filter(d => !d.isLocked).map( (d, k) => 
               <Dice 
-              key={k}
-              dice={d}
-              onClick={() => this.handleDiceClick(d, k)} 
-              roll={this.state.rolling}
+                id={k}
+                dice={d}
+                onClick={() => this.handleDiceClick(d, k)} 
+                roll={this.state.rolling}
               />
               )}
           </div>,
@@ -111,26 +119,30 @@ export default class App extends Component<{}, AppState> {
               >Roll !</button>
           </div>,
 
+          this.state.dices.filter(d => d.isLocked).length > 0 &&
           <div className="dices-locked">
             <h2 className='dices-locked-title'>Locked dices</h2>
             <div className="dices-locked-content">
               {this.state.dices.filter(d => d.isLocked).map( (d, k) => 
                 <Dice 
-                key={k}
-                dice={d} 
-                onClick={() => this.handleDiceClick(d, k)} 
-                roll={false} 
+                  id={k}
+                  dice={d} 
+                  onClick={() => this.handleDiceClick(d, k)} 
+                  roll={false} 
                 />
               )}
             </div>
           </div>
-        ]}
+          ]}
       </div>
       
       <div className='scoring-board-zone'>
         <ScoringBoard 
-          currentPlayerIndex={this.state.currentPlayerIndex}
           players={this.state.players}
+          currentPlayerIndex={this.state.currentPlayerIndex}
+          isCurrentPlayer={this.state.myIndex === this.state.currentPlayerIndex}
+          clickOnValueContract={this.handleClickOnValueContract}
+          clickOnMissionContract={this.handleClickOnMissionContract}
         />
       </div>
     </div>
