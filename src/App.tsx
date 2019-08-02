@@ -125,13 +125,6 @@ export default class App extends Component<{}, AppState> {
             </div>
           </div>
         ]}
-
-        {/* <div className="turn-possibilities">
-          <h2 className='turn-possibilities-title'>Possibilities</h2>
-          <div className="turn-possibilities-content">
-              {this.possibilities.map( (p, k) => <div key={k}>{p}</div>)}
-          </div>
-        </div> */}
       </div>
       
       <div className='scoring-board-zone'>
