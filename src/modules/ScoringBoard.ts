@@ -13,7 +13,7 @@ export class ScoringBoard {
     }
 
     completeContract(type: ScoringMission, score: boolean | number ){
-        this.contracts[type] = score || true
+        this.contracts[type] = score 
     }
 
     getValuesScore(withBonus = true){

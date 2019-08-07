@@ -43,7 +43,7 @@ export default class ScoringBoard extends Component<ScoringBoardProps, ScoringBo
               className={ (!hasScore && this.props.isCurrentPlayer && this.props.currentPlayerIndex === k) ? 'possible-case' : ''}
               onClick={() => !hasScore && this.props.clickOnValueContract(k, diceValue)}
             >
-              {p.scoringBoard.diceValues[diceValue]}
+              {(!!p.scoringBoard.diceValues[diceValue] || p.scoringBoard.diceValues[diceValue] === 0) ? p.scoringBoard.diceValues[diceValue] * diceValue : ''}
             </td>
           })}
       </tr>
@@ -68,7 +68,7 @@ export default class ScoringBoard extends Component<ScoringBoardProps, ScoringBo
             return <td 
                 key={k} 
                 className={ (contractValueToShow === '' && this.props.isCurrentPlayer && this.props.currentPlayerIndex === k) ? 'possible-case' : ''}              
-                onClick={() => this.props.clickOnMissionContract(k, i)}
+                onClick={() => contractValueToShow === '' && this.props.clickOnMissionContract(k, i)}
               >
                 {contractValueToShow}
               </td>

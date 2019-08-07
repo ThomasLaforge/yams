@@ -1,4 +1,3 @@
-import { Player } from "./Player";
 import { Dice } from "./Dice";
 import { MAX_ROLL, NB_DICES, Suite } from "./defs";
 
@@ -24,7 +23,7 @@ export class DiceTurn {
             this.nbRoll++
         }
         else {
-            throw "can't reroll";
+            throw Error("can't reroll");
         }
     }
 
@@ -52,7 +51,7 @@ export class DiceTurn {
                 suiteElts.shift()
                 break;
             default:
-                throw "Not a known Suite type";
+                throw Error("Not a known Suite type");
         }
 
         return suiteElts.reduce( (nbEltValidate, diceValue) => nbEltValidate + Math.min(counts[diceValue], 1), 0) === NB_DICES
